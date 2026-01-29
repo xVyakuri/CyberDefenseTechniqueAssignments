@@ -1,1 +1,5 @@
+---
+ad_domain_name: "lab.local"
+ad_netbios_name: "LAB"
+ad_safe_mode_password: "student"
 
