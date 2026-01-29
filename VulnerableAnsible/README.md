@@ -24,6 +24,11 @@ This repository contains Ansible playbooks and scripts for setting up an Active 
 - WinRM configured and enabled
 - PowerShell 5.1+
 
+### Configuration of Inventory and Server Setup
+- Edit Inventory/hosts.ini with made server details either from OpenStack or Terraform
+- Run ansible-playbook playbooks/setup-ad.yml to setup Active Directory
+- Run ansible-playbook playbooks/vulnerable-ad.yml to apply vulnerabilities
+
 ### Initial Windows Server Setup
 Before running Ansible, configure WinRM on the Windows server:
 
