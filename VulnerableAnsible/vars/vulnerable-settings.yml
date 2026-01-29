@@ -1,1 +1,37 @@
+---
+# ======================================================================================
+# Creates security vulnerabilities onto Domain and explicity for the Domain Controllers
+# 
+# Create Vulnerable GPO settings
+# - Disable SMB Signing
+# - Disable LDAP Signing
+#
+# Create users meant to be exploited
+# ======================================================================================
+
+vulnerable_users:
+  - username: "svc_sql"
+    password: "ServicePass123!"
+    spn: "MSSQLSvc/sql01.lab.local:1433"
+    description: "SQL Service Account"
+    ou: "OU=Service Accounts,DC=lab,DC=local"
+  - username: "svc_web"
+    password: "WebService123!"
+    spn: "HTTP/web01.lab.local"
+    description: "Web Service Account"
+    ou: "OU=Service Accounts,DC=lab,DC=local"
+
+# Weak GPO settings
+vulnerable_gpo_settings:
+  - name: "Disable SMB Signing"
+    setting: "Microsoft.Policies.SMBSigning"
+    value: "Disabled"
+  - name: "Disable LDAP Signing"
+    setting: "Microsoft.Policies.LDAPSigning"
+    value: "None"
+
+# Delegation issues
+unconstrained_delegation_computers:
+  - "WEB01"
+  - "APP01"
 
