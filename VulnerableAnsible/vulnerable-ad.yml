@@ -1,0 +1,34 @@
+---
+- name: Configure Intentionally Vulnerable AD
+  hosts: domain_controllers
+  gather_facts: yes
+  vars_files:
+    - ../vars/ad-config.yml
+    - ../vars/vulnerable-settings.yml
+
+  tasks:
+    - name: Display warning
+      debug:
+        msg: 
+          - "WARNING: This playbook creates security vulnerabilities"
+          - "Only run in isolated lab environments"
+          - "Press Ctrl+C to abort"
+    
+    - name: Pause for confirmation
+      pause:
+        seconds: 10
+
+  roles:
+    - vulnerable-configs
+
+  post_tasks:
+    - name: Display vulnerabilities created
+      debug:
+        msg:
+          - "Vulnerabilities configured:"
+          - "1. Kerberoastable service accounts created"
+          - "2. SMB signing disabled"
+          - "3. LDAP signing disabled"
+          - "4. Unconstrained delegation enabled on computers"
+          - "5. Weak password policy"
+          - "6. LLMNR enabled"
