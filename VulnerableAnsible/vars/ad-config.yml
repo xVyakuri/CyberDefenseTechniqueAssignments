@@ -1,1 +1,42 @@
+---
+# Active Directory Configuration
+domain_name: "lab.local"
+domain_netbios_name: "LAB"
+safe_mode_password: "SafeMode123!@#"
+forest_mode: "WinThreshold"
+domain_mode: "WinThreshold"
 
+# Network Configuration
+dns_forwarder: "8.8.8.8"
+
+# Organizational Units
+organizational_units:
+  - name: "Users"
+    path: "OU=Users,DC=lab,DC=local"
+  - name: "Computers"
+    path: "OU=Computers,DC=lab,DC=local"
+  - name: "Servers"
+    path: "OU=Servers,DC=lab,DC=local"
+  - name: "Service Accounts"
+    path: "OU=Service Accounts,DC=lab,DC=local"
+
+# Standard Users
+# ===============================================================
+# Format of
+# domain_users:
+# - username: ...
+#   password: ...
+#   firstname: ...
+#   lastname: ...
+#   ou: "OU=Users, DC=lab, DC=local"
+#   groups:
+#     - "Domain Admins"      (whatever group is needed)
+# ===============================================================
+domain_users:
+  - username: "admin.user"
+    password: "Admin123!"
+    firstname: "Admin"
+    lastname: "User"
+    ou: "OU=Users,DC=lab,DC=local"
+    groups:
+      - "Domain Admins"
