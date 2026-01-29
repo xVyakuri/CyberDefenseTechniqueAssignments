@@ -1,1 +1,34 @@
+---
+# ===================================================================
+# Domain Controller Setup
+# Change hostname and add roles to DC
+# ===================================================================
+- name: Setup Active Directory Domain Controller
+  hosts: domain_controllers
+  gather_facts: yes
+  vars_files:
+    - ../vars/ad-config.yml
+
+  tasks:
+    - name: Set timezone to UTC
+      win_timezone:
+        timezone: "UTC"
+
+    - name: Set computer name
+      win_hostname:
+        name: DC01
+      register: hostname_change
+
+    - name: Reboot if hostname changed
+      win_reboot:
+      when: hostname_change.reboot_required
+
+  roles:
+    - ad-domain-controller
+    - ad-users
+
+  post_tasks:
+    - name: Display completion message
+      debug:
+        msg: "Active Directory setup complete for domain {{ domain_name }}"
 
