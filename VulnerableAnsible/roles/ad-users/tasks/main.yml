@@ -1,1 +1,37 @@
+---
+# ============================================================================
+# AD User Setup
+# ============================================================================
+- name: Create Organizational Units
+  win_shell: |
+    Import-Module ActiveDirectory
+    try {
+      Get-ADOrganizationalUnit -Identity "{{ item.path }}" -ErrorAction Stop
+    } catch {
+      New-ADOrganizationalUnit -Name "{{ item.name }}" -Path "{{ item.path.split(',', 1)[1] }}" -ProtectedFromAccidentalDeletion $false
+    }
+  loop: "{{ organizational_units }}"
+  ignore_errors: yes
+
+- name: Create domain users
+  win_domain_user:
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+    firstname: "{{ item.firstname }}"
+    surname: "{{ item.lastname }}"
+    state: present
+    path: "{{ item.ou }}"
+    password_never_expires: no
+    user_cannot_change_password: no
+    enabled: yes
+  loop: "{{ domain_users }}"
+
+- name: Add users to groups
+  win_domain_group_membership:
+    name: "{{ item.1 }}"
+    members:
+      - "{{ item.0.username }}"
+    state: present
+  loop: "{{ domain_users | subelements('groups', skip_missing=True) }}"
+  when: item.0.groups is defined
 
