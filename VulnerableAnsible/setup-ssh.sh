@@ -41,7 +41,7 @@ echo ""
 # Step 2: Read server IPs from inventory
 echo "Step 2: Reading server IPs from inventory..."
 if [ ! -f "inventory/hosts.ini" ]; then
-    echo -e "${RED}Error: inventory/hosts.ini not found!${NC}"
+    echo -e "${RED}Error: inventory.ini not found!${NC}"
     echo "Make sure you're running this script from the project directory."
     exit 1
 fi
