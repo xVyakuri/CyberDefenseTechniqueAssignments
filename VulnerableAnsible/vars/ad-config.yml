@@ -34,7 +34,7 @@ organizational_units:
 # ===============================================================
 domain_users:
   - username: "admin.user"
-    password: "Admin123!"
+    password: "studentTest!"
     firstname: "Admin"
     lastname: "User"
     ou: "OU=Users,DC=lab,DC=local"
