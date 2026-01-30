@@ -11,12 +11,12 @@
 
 vulnerable_users:
   - username: "svc_sql"
-    password: "ServicePass123!"
+    password: "studentBad!"
     spn: "MSSQLSvc/sql01.lab.local:1433"
     description: "SQL Service Account"
     ou: "OU=Service Accounts,DC=lab,DC=local"
   - username: "svc_web"
-    password: "WebService123!"
+    password: "studentBad!"
     spn: "HTTP/web01.lab.local"
     description: "Web Service Account"
     ou: "OU=Service Accounts,DC=lab,DC=local"
