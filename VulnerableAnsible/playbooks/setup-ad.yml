@@ -16,7 +16,7 @@
 
     - name: Set computer name
       win_hostname:
-        name: DC01
+        name: AX6740-DC01
       register: hostname_change
 
     - name: Reboot if hostname changed
