@@ -3,7 +3,7 @@
 # AD User Setup
 # ============================================================================
 - name: Create Organizational Units
-  win_shell: |
+  ansible.windows.win_shell: |
     Import-Module ActiveDirectory
     try {
       Get-ADOrganizationalUnit -Identity "{{ item.path }}" -ErrorAction Stop
@@ -11,27 +11,43 @@
       New-ADOrganizationalUnit -Name "{{ item.name }}" -Path "{{ item.path.split(',', 1)[1] }}" -ProtectedFromAccidentalDeletion $false
     }
   loop: "{{ organizational_units }}"
-  ignore_errors: yes
+  failed_when: false
+
+- name: Create Domain Admins Group
+  community.windows.win_domain_group:
+    name: "Domain Admins"
+    scope: "Global"
+    description: "Domain Administrators for Lab"
+    state: present
+  failed_when: false
+
+- name: Create domain admins
+  community.windows.win_domain_group_membership:
+    name: "Domain Admins"
+    members: "{{ domain_admins }}"
+    state: present
+  failed_when: false
 
 - name: Create domain users
-  win_domain_user:
+  community.windows.win_domain_user:
     name: "{{ item.username }}"
     password: "{{ item.password }}"
     firstname: "{{ item.firstname }}"
     surname: "{{ item.lastname }}"
     state: present
     path: "{{ item.ou }}"
-    password_never_expires: no
-    user_cannot_change_password: no
-    enabled: yes
+    password_never_expires: false
+    user_cannot_change_password: false
+    enabled: true
   loop: "{{ domain_users }}"
+  failed_when: false
 
 - name: Add users to groups
-  win_domain_group_membership:
+  community.windows.win_domain_group_membership:
     name: "{{ item.1 }}"
     members:
       - "{{ item.0.username }}"
     state: present
   loop: "{{ domain_users | subelements('groups', skip_missing=True) }}"
   when: item.0.groups is defined
-
+  failed_when: false
