@@ -47,7 +47,7 @@ if [ ! -f "inventory/hosts.ini" ]; then
 fi
 
 # Extract IPs from inventory
-SERVERS=$(grep "ansible_host=" inventory.ini | sed 's/.*ansible_host=//' | tr -d ' ')
+SERVERS=$(grep "ansible_host=" inventory/hosts.ini | sed 's/.*ansible_host=//' | tr -d ' ')
 echo "Found servers:"
 echo "$SERVERS"
 echo ""

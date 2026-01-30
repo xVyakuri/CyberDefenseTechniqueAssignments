@@ -1,18 +1,16 @@
 ---
 # ===================================================================
 # Import Active Directory
-# Make vulnerable users 
+# Make vulnerable users
 # Have all vulnerabilities and their corresponding PowerShell Commands
 # Add Weak Password Policies
 # ===================================================================
 
 - name: Create service accounts with SPNs (Kerberoastable)
-  win_shell: |
+  ansible.windows.win_shell: |
     Import-Module ActiveDirectory
-    
     $username = "{{ item.username }}"
     $password = ConvertTo-SecureString "{{ item.password }}" -AsPlainText -Force
-    
     # Create user if doesn't exist
     try {
       Get-ADUser -Identity $username -ErrorAction Stop
@@ -26,56 +24,53 @@
         -Description "{{ item.description }}" `
         -Path "{{ item.ou }}"
     }
-    
     # Set SPN (makes it Kerberoastable)
     Set-ADUser -Identity $username -ServicePrincipalNames @{Add="{{ item.spn }}"}
   loop: "{{ vulnerable_users }}"
 
 - name: Disable SMB signing (enables relay attacks)
-  win_shell: |
+  ansible.windows.win_shell: |
     Set-SmbServerConfiguration -RequireSecuritySignature $false -EnableSecuritySignature $false -Force
-  ignore_errors: yes
+  failed_when: false
 
 - name: Disable LDAP signing requirements
-  win_shell: |
+  ansible.windows.win_shell: |
     Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" `
       -Name "LDAPServerIntegrity" -Value 0 -Type DWord
-  ignore_errors: yes
+  failed_when: false
 
 - name: Enable LLMNR (Link-Local Multicast Name Resolution poisoning)
-  win_shell: |
+  ansible.windows.win_shell: |
     # LLMNR is enabled by default, ensuring it stays enabled
     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" `
       -Name "EnableMulticast" -Value 1 -Force -ErrorAction SilentlyContinue
-  ignore_errors: yes
+  failed_when: false
 
 - name: Disable Windows Defender (for lab testing only)
-  win_shell: |
+  ansible.windows.win_shell: |
     Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
-  ignore_errors: yes
+  failed_when: false
 
 - name: Create computer accounts with unconstrained delegation
-  win_shell: |
+  ansible.windows.win_shell: |
     Import-Module ActiveDirectory
-    
     $computerName = "{{ item }}"
     try {
       Get-ADComputer -Identity $computerName -ErrorAction Stop
     } catch {
       New-ADComputer -Name $computerName -Enabled $true
     }
-    
     # Enable unconstrained delegation (TRUSTED_FOR_DELEGATION)
     Set-ADComputer -Identity $computerName -TrustedForDelegation $true
   loop: "{{ unconstrained_delegation_computers }}"
-  ignore_errors: yes
+  failed_when: false
 
 - name: Add weak password policy
-  win_shell: |
+  ansible.windows.win_shell: |
     Import-Module ActiveDirectory
     Set-ADDefaultDomainPasswordPolicy -Identity "{{ domain_name }}" `
       -MinPasswordLength 5 `
       -ComplexityEnabled $false `
       -LockoutThreshold 0 `
       -MaxPasswordAge 0
-  ignore_errors: yes
+  failed_when: false

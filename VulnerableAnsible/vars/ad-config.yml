@@ -9,6 +9,10 @@ domain_mode: "WinThreshold"
 # Network Configuration
 dns_forwarder: "8.8.8.8"
 
+# Domain Admins
+domain_admins:
+  - "admin.user"
+
 # Organizational Units
 organizational_units:
   - name: "Users"
