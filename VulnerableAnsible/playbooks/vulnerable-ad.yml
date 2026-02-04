@@ -5,6 +5,7 @@
 # - Exploitable Users
 # - Weak Password Policy
 # ===========================================================================
+
 - name: Configure Intentionally Vulnerable AD
   hosts: domain_controllers
   gather_facts: yes

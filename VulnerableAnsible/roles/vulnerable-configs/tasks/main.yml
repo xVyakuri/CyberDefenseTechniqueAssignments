@@ -6,26 +6,39 @@
 # Add Weak Password Policies
 # ===================================================================
 
-- name: Create service accounts with SPNs (Kerberoastable)
-  ansible.windows.win_shell: |
-    Import-Module ActiveDirectory
-    $username = "{{ item.username }}"
-    $password = ConvertTo-SecureString "{{ item.password }}" -AsPlainText -Force
-    # Create user if doesn't exist
-    try {
-      Get-ADUser -Identity $username -ErrorAction Stop
-    } catch {
-      New-ADUser -Name $username `
-        -SamAccountName $username `
-        -UserPrincipalName "$username@{{ domain_name }}" `
-        -AccountPassword $password `
-        -Enabled $true `
-        -PasswordNeverExpires $true `
-        -Description "{{ item.description }}" `
-        -Path "{{ item.ou }}"
-    }
-    # Set SPN (makes it Kerberoastable)
-    Set-ADUser -Identity $username -ServicePrincipalNames @{Add="{{ item.spn }}"}
+# - name: Create service accounts with SPNs (Kerberoastable)
+#   ansible.windows.win_shell: |
+#     # Import-Module ActiveDirectory
+#     $username = "{{ item.username }}"
+#     $password = ConvertTo-SecureString "{{ item.password }}" -AsPlainText -Force
+#     # Create user if doesn't exist
+#     try {
+#       Get-ADUser -Identity $username -ErrorAction Stop
+#     } catch {
+#       New-ADUser -Name $username `
+#         -SamAccountName $username `
+#         -UserPrincipalName "$username@{{ domain_name }}" `
+#         -AccountPassword $password `
+#         -Enabled $true `
+#         -PasswordNeverExpires $true `
+#         -Description "{{ item.description }}" `
+#         -Path "{{ item.ou }}"
+#     }
+#     # Set SPN (makes it Kerberoastable)
+#     Set-ADUser -Identity $username -ServicePrincipalNames @{Add="{{ item.spn }}"}
+#   loop: "{{ vulnerable_users }}"
+
+- name: Create AD servcice accounts with SPNs (Kerberoastable)
+  community.windows.win_domain_user:
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+    user_cannot_change_password: false
+    password_never_expires: true
+    description: "{{ item.description }}"
+    path: "{{ item.ou }}"
+    state: present
+    spn:
+      - "{{ item.spn }}"
   loop: "{{ vulnerable_users }}"
 
 - name: Disable SMB signing (enables relay attacks)
