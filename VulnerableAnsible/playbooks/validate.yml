@@ -1,0 +1,68 @@
+---
+# ===================================================
+# Validate All on Domain Controller
+# ===================================================
+# Run after running setup-ad.yml, and vulnerable-ad.yml
+# Checks for the following
+# 1. Working Active Directory
+# 2. Listed Domain
+# 3. All AD users and service accounts
+# 4. Group Policies applied
+# ===================================================
+
+- name: Validate Active Directory and enumerate users
+  hosts: domain_controllers
+  gather_facts: false
+  vars_files:
+    - ../vars/ad-config.yml
+    - ../vars/vulnerable-settings.yml
+
+  tasks:
+    - name: Display warning
+      ansible.builtin.debug:
+        msg:
+          - "WARNING: This playbook queries Active Directory"
+          - "Only run in isolated lab environments"
+          - "Press Ctrl+C to abort"
+
+    - name: Pause for confirmation
+      ansible.builtin.pause:
+        seconds: 10
+
+    - name: Force Group Policy Update
+      ansible.windows.win_shell: |
+        gpupdate /force
+      register: gpupdate_result
+
+    - name: Validate Active Directory domain
+      ansible.windows.win_shell: |
+        Import-Module ActiveDirectory
+        $domain = (Get-ADDomain).DNSRoot
+        Write-Output "Current Domain: $domain"
+      register: domain_check
+
+    - name: Show domain check result
+      ansible.builtin.debug:
+        var: domain_check.stdout
+
+    - name: List all AD users and service accounts
+      ansible.windows.win_shell: |
+        Import-Module ActiveDirectory
+        Get-ADUser -Filter * -Properties * | Select-Object Name,SamAccountName,Description,Enabled
+      register: ad_users
+
+    - name: Show AD users and service accounts
+      ansible.builtin.debug:
+        var: ad_users.stdout_lines
+
+    - name: Get all GPOs in Domain
+      ansible.windows.win_shell: |
+        Import-Module GroupPolicy
+        Get-GPO -All |
+        Select DisplayName, Owner, CreationTime |
+        ConvertTo-Json
+      register: gpo_data
+
+    - name: Show GPOs in Domain
+      ansible.builtin.debug:
+        var: gpo_data.stdout | from_json
