@@ -22,16 +22,33 @@ vulnerable_users:
     ou: "OU=Service Accounts,DC=lab,DC=local"
 
 # Weak GPO settings
+# vulnerable_gpo_settings:
+#   - name: "Disable SMB Signing"
+#     setting: "Microsoft.Policies.SMBSigning"
+#     value: "Disabled"
+#   - name: "Disable LDAP Signing"
+#     setting: "Microsoft.Policies.LDAPSigning"
+#     value: "None"
+
+# Weak GPO Settings
 vulnerable_gpo_settings:
   - name: "Disable SMB Signing"
-    setting: "Microsoft.Policies.SMBSigning"
-    value: "Disabled"
+    key: 'HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'
+    value_name: "SMB1"
+    type: "DWORD"
+    value: 0
   - name: "Disable LDAP Signing"
-    setting: "Microsoft.Policies.LDAPSigning"
-    value: "None"
+    key: 'HKLM\SYSTEM\CurrentControlSet\Services\NTDS\Parameters'
+    value_name: "LDAPServerIntegrity"
+    type: "DWORD"
+    value: 0
+  - name: "Enable LLMNR"
+    key: 'HKLM\SYSTEM\CurrentControlSet\Services\DNSClient\Parameters'
+    value_name: "EnableMulticast"
+    type: "DWORD"
+    value: 1
 
 # Delegation issues
 unconstrained_delegation_computers:
   - "WEB01"
   - "APP01"
-
