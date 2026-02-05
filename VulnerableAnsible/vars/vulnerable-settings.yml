@@ -42,6 +42,11 @@ vulnerable_gpo_settings:
     value_name: "LDAPServerIntegrity"
     type: "DWORD"
     value: 0
+  - name: "Disable SMB2 Signing"
+    key: 'HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters'
+    value_name: "SMB2"
+    type: "DWORD"
+    value: 0
   - name: "Enable LLMNR"
     key: 'HKLM\SYSTEM\CurrentControlSet\Services\DNSClient\Parameters'
     value_name: "EnableMulticast"
