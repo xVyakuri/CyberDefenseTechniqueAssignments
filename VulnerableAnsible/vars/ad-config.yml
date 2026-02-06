@@ -6,6 +6,14 @@ safe_mode_password: "SafeMode123!@#"
 forest_mode: "WinThreshold"
 domain_mode: "WinThreshold"
 
+forward_zone: "lab.local"
+reverse_zone: "65.100.in-addr.arpa"
+
+dc_hostname: "AX6740-DC01"
+dc_ip_address: "100.65.7.12"
+ansible_host_hostname: "AX6740-UBUNTU"
+ansible_host_ip_address: "100.65.2.231"
+
 # Network Configuration
 dns_forwarder: "8.8.8.8"
 

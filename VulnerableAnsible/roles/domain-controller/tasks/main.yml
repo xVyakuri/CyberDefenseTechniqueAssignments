@@ -56,7 +56,69 @@
     timeout: 300
   when: domain_check.stdout | trim == "not_exists"
 
+- name: Set DNS server to localhost
+  ansible.windows.win_shell: |
+    Get-NetAdapter | Where-Object {$_.Status -eq "Up"} |
+      ForEach-Object {
+        Set-DnsClientServerAddress -InterfaceAlias $_.Name -ServerAddresses ("{{ dc_ip_address }}", "8.8.8.8")
+      }
+
 - name: Configure DNS forwarder
   ansible.windows.win_shell: |
     Add-DnsServerForwarder -IPAddress "8.8.8.8" -ErrorAction SilentlyContinue
+  failed_when: false
+
+- name: Ensure Forward Lookup Zones
+  community.windows.win_dns_zone:
+    name: "{{ forward_zone }}"
+    type: Primary
+    dynamic_update: secure
+    replication: domain
+    state: present
+
+- name: Ensure Reverse Lookup Zones
+  community.windows.win_dns_zone:
+    name: "{{ reverse_zone }}"
+    type: Primary
+    dynamic_update: secure
+    replication: domain
+    state: present
+
+# Create Domain Controller A Records
+- name: Create A Record for Domain Controller
+  community.windows.win_dns_record:
+    zone: "{{ forward_zone }}"
+    name: "{{ dc_hostname }}"
+    type: A
+    value: "{{ dc_ip_address }}"
+    state: present
+
+- name: Create PTR Record for Domain Controller
+  community.windows.win_dns_record:
+    zone: "{{ reverse_zone }}"
+    name: "{{ dc_ip_address.split('.')[3] }}.{{ dc_ip_address.split('.')[2] }}"
+    type: PTR
+    value: "{{ dc_hostname }}.{{ domain_name }}"
+    state: present
+
+# Create Ansible Host A Records
+- name: Create A Record for Ansible Host
+  community.windows.win_dns_record:
+    zone: "{{ forward_zone }}"
+    name: "{{ ansible_host_hostname }}"
+    type: A
+    value: "{{ ansible_host_ip_address }}"
+    state: present
+
+- name: Create PTR Record for Ansible Host
+  community.windows.win_dns_record:
+    zone: "{{ reverse_zone }}"
+    name: "{{ ansible_host_ip_address.split('.')[3] }}.{{ ansible_host_ip_address.split('.')[2] }}"
+    type: PTR
+    value: "{{ ansible_host_hostname }}.{{ domain_name }}"
+    state: present
+
+- name: Enable SMB2 Protocol (This will still keep the SMB2 Signing Disabled)
+  ansible.windows.win_shell: |
+    Set-SmbServerConfiguration -EnableSMB2Protocol $true -Force
   failed_when: false

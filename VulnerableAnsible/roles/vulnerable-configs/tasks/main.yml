@@ -6,28 +6,6 @@
 # Add Weak Password Policies
 # ===================================================================
 
-# - name: Create service accounts with SPNs (Kerberoastable)
-#   ansible.windows.win_shell: |
-#     # Import-Module ActiveDirectory
-#     $username = "{{ item.username }}"
-#     $password = ConvertTo-SecureString "{{ item.password }}" -AsPlainText -Force
-#     # Create user if doesn't exist
-#     try {
-#       Get-ADUser -Identity $username -ErrorAction Stop
-#     } catch {
-#       New-ADUser -Name $username `
-#         -SamAccountName $username `
-#         -UserPrincipalName "$username@{{ domain_name }}" `
-#         -AccountPassword $password `
-#         -Enabled $true `
-#         -PasswordNeverExpires $true `
-#         -Description "{{ item.description }}" `
-#         -Path "{{ item.ou }}"
-#     }
-#     # Set SPN (makes it Kerberoastable)
-#     Set-ADUser -Identity $username -ServicePrincipalNames @{Add="{{ item.spn }}"}
-#   loop: "{{ vulnerable_users }}"
-
 - name: Create AD servcice accounts with SPNs (Kerberoastable)
   community.windows.win_domain_user:
     name: "{{ item.username }}"
@@ -41,40 +19,23 @@
       - "{{ item.spn }}"
   loop: "{{ vulnerable_users }}"
 
-# - name: Disable SMB signing (enables relay attacks)
-#   ansible.windows.win_shell: |
-#     Set-SmbServerConfiguration -RequireSecuritySignature $false -EnableSecuritySignature $false -Force
-#   failed_when: false
-
-# - name: Disable LDAP signing requirements
-#   ansible.windows.win_shell: |
-#     Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" `
-#       -Name "LDAPServerIntegrity" -Value 0 -Type DWord
-#   failed_when: false
-
-# - name: Enable LLMNR (Link-Local Multicast Name Resolution poisoning)
-#   ansible.windows.win_shell: |
-#     # LLMNR is enabled by default, ensuring it stays enabled
-#     Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" `
-#       -Name "EnableMulticast" -Value 1 -Force -ErrorAction SilentlyContinue
-#   failed_when: false
-
 - name: Configure vulnerable GPO settings
   ansible.windows.win_shell: |
     Import-Module GroupPolicy
     # Create GPO if missing
     if (-not (Get-GPO -Name "{{ item.name }}" -ErrorAction SilentlyContinue)) {
       New-GPO -Name "{{ item.name }}"
-      # Link to domain
       New-GPLink -Name "{{ item.name }}" -Target "DC=lab,DC=local" -Enforced Yes
     }
+
     # Set registry value
-    Set-GPRegistryValue `
-      -Name "{{ item.name }}" `
-      -Key "{{ item.key }}" `
-      -ValueName "{{ item.value_name }}" `
-      -Type "{{ item.type }}" `
-      -Value {{ item.value }}
+      Set-GPRegistryValue `
+        -Name "{{ item.name }}" `
+        -Key "{{ item.key }}" `
+        -ValueName "{{ item.value_name }}" `
+        -Type "{{ item.type }}" `
+        -Value {{ item.value }}
+
   loop: "{{ vulnerable_gpo_settings }}"
 
 - name: Disable Windows Defender (for lab testing only)

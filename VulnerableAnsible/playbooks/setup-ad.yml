@@ -16,7 +16,7 @@
 
     - name: Set computer name
       win_hostname:
-        name: AX6740-DC01
+        name: "{{ dc_hostname }}"
       register: hostname_change
 
     - name: Reboot if hostname changed
