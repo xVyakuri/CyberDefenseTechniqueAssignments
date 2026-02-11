@@ -1,0 +1,27 @@
+# Enhanced Lateral Movement Tool - Python Requirements
+# Install with: pip3 install -r requirements.txt
+
+# Core dependency - Impacket framework for SMB/RPC operations
+impacket>=0.11.0
+
+# Optional but recommended dependencies
+
+# Colorama for colored terminal output
+colorama>=0.4.6
+
+# Rich for beautiful terminal output (optional)
+# rich>=13.0.0
+
+# Tabulate for formatted table output (optional)
+# tabulate>=0.9.0
+
+# Note: The following are part of Python standard library
+# and do not need to be installed:
+# - socket
+# - logging
+# - json
+# - argparse
+# - concurrent.futures
+# - ipaddress
+# - time
+# - sys
