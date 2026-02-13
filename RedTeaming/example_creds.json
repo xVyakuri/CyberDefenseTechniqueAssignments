@@ -1,0 +1,12 @@
+[
+  {
+    "username": "administrator",
+    "password": "Password123!",
+    "domain": "CORP"
+  },
+  {
+    "username": "admin",
+    "ntlm_hash": "31d6cfe0d16ae931b73c59d7e0c089c0",
+    "domain": "CORP"
+  }
+]

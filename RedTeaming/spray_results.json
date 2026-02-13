@@ -1,0 +1,19 @@
+{
+  "credentials": [
+    {
+      "username": "svc_sql",
+      "password": "studentBad!",
+      "ntlm_hash": null,
+      "domain": "lab.local"
+    }
+  ],
+  "validated_hosts": {
+    "100.65.7.12": [
+      {
+        "username": "svc_sql",
+        "auth_type": "smb",
+        "timestamp": 1770877235.3558495
+      }
+    ]
+  }
+}

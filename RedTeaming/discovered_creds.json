@@ -1,0 +1,84 @@
+{
+  "credentials": [
+    {
+      "username": "svc_sql",
+      "password": "studentBad!",
+      "ntlm_hash": null,
+      "domain": "lab.local"
+    },
+    {
+      "username": "r",
+      "password": null,
+      "ntlm_hash": "33cb0f6f6d5fb2c28baea18e9178e381",
+      "domain": "nthash)\nAdministrato"
+    },
+    {
+      "username": "r",
+      "password": null,
+      "ntlm_hash": "177d2e042a779a1937693135c7aa538f",
+      "domain": "nthash)\n[*] Using the DRSUAPI method to get NTDS.DIT secrets\nAdministrato"
+    },
+    {
+      "username": "t",
+      "password": null,
+      "ntlm_hash": "996bb92b50cbafdb24c451964284ecee",
+      "domain": "\nkrbtg"
+    },
+    {
+      "username": "e",
+      "password": null,
+      "ntlm_hash": "33cb0f6f6d5fb2c28baea18e9178e381",
+      "domain": "\ncyberrang"
+    },
+    {
+      "username": "t",
+      "password": null,
+      "ntlm_hash": "2569cbc4f6f0112803de51d6f6e0f22a",
+      "domain": "\ncloudbase-ini"
+    },
+    {
+      "username": "l",
+      "password": null,
+      "ntlm_hash": "328e27e9bbfc34aa3e2e9edb0c8b4848",
+      "domain": "\nsvc_sq"
+    },
+    {
+      "username": "b",
+      "password": null,
+      "ntlm_hash": "328e27e9bbfc34aa3e2e9edb0c8b4848",
+      "domain": "\nsvc_we"
+    },
+    {
+      "username": "$",
+      "password": null,
+      "ntlm_hash": "d85f3c22cf21026623b5abc78c466653",
+      "domain": "\nAX6740-DC01"
+    },
+    {
+      "username": "$",
+      "password": null,
+      "ntlm_hash": "df1cae3d40e93389866eb9a61c915374",
+      "domain": "\nWEB01"
+    },
+    {
+      "username": "$",
+      "password": null,
+      "ntlm_hash": "76bc2af5cbb1f5fce5932444d69afb8a",
+      "domain": "\nAPP01"
+    }
+  ],
+  "validated_hosts": {
+    "100.65.7.12": [
+      {
+        "username": "svc_sql",
+        "auth_type": "smb",
+        "timestamp": 1770930482.210804
+      },
+      {
+        "username": "svc_sql",
+        "auth_type": "smb",
+        "timestamp": 1770930487.1706374
+      }
+    ]
+  }
+}

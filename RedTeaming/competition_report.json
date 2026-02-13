@@ -1,0 +1,25 @@
+{
+  "initial_target": "100.65.7.12",
+  "total_targets_scanned": 3,
+  "compromised_hosts": [
+    "100.65.7.12"
+  ],
+  "pivot_chain": [
+    "100.65.7.12"
+  ],
+  "credentials_discovered": 11,
+  "validated_access": {
+    "100.65.7.12": [
+      {
+        "username": "svc_sql",
+        "auth_type": "smb",
+        "timestamp": 1770930482.210804
+      },
+      {
+        "username": "svc_sql",
+        "auth_type": "smb",
+        "timestamp": 1770930487.1706374
+      }
+    ]
+  }
+}
