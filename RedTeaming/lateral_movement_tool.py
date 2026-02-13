@@ -7,7 +7,8 @@ This tool is designed for authorized penetration testing competitions and lab en
 It extends Impacket's functionality to provide automated lateral movement capabilities
 across Active Directory networks.
 
-Author: Security Research Tool
+Author: Andrew Xie
+Date: 02/13/2026
 License: Educational/Competition Use Only
 """
 
