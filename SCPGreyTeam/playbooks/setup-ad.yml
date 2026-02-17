@@ -1,0 +1,34 @@
+---
+# =============================================
+# Playbook Name: setup-ad.yml
+# Description: Sets up an Active Directory Domain Controller
+# =============================================
+
+- name: Setup Active Directory Domain Controller
+  hosts: domain_controllers
+  gather_facts: yes
+  vars_files:
+    - ../vars/ad-config.yml
+
+  tasks:
+    - name: Set timezone to UTC
+      win_timezone:
+        timezone: "UTC"
+
+    - name: Set computer name
+      win_hostname:
+        name: "{{ dc_hostname }}"
+      register: hostname_change
+
+    - name: Reboot if hostname changed
+      win_reboot:
+      when: hostname_change.reboot_required
+
+  roles:
+    - domain-controller
+    - ad-users
+
+  post_tasks:
+    - name: Display completion message
+      debug:
+        msg: "Active Directory setup complete for domain {{ domain_name }}"

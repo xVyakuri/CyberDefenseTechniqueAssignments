@@ -1,0 +1,40 @@
+---
+# Active Directory Configuration Variables
+domain_name: "lab.local"
+domain_netbios_name: "LAB"
+safe_mode_password: "SafeMode123!"
+forest_mode: "WinThreshold"
+domain_mode: "WinThreshold"
+
+forward_zone: "lab.local"
+reverse_zone: "65.100.in-addr.arpa"
+dc_hostname: "SCP-DC01"
+dc_ip_address: "1.1.1.1"
+
+# Network Configuration
+dns_forwarder: "8.8.8.8"
+
+# Domain Admins
+domain_admins:
+  - "overseer.scp"
+
+# Organizational Units
+organizational_units:
+  - name: "Users"
+    path: "OU=Users,DC=lab,DC=local"
+  - name: "Computers"
+    path: "OU=Computers,DC=lab,DC=local"
+  - name: "Servers"
+    path: "OU=Servers,DC=lab,DC=local"
+  - name: "Service Accounts"
+    path: "OU=Service Accounts,DC=lab,DC=local"
+
+# Create domain users
+domain_users:
+  - username: "overseer.scp"
+    password: "student"
+    firstname: "Overseer"
+    lastname: "SCP"
+    ou: "OU=Users,DC=lab,DC=local"
+    groups:
+      - "Domain Admins"

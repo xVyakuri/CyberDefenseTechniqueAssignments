@@ -1,0 +1,12 @@
+---
+ad_domain_name: "lab.local"
+ad_netbios_name: "LAB"
+ad_safe_mode_password: "student"
+
+servers:
+  - name: "SCP-DC01"
+    ip_address: "1.1.1.1"
+  - name: "SCP-SMB01"
+    ip_address: "1.1.1.2"
+  - name: "SCP-SFTP01"
+    ip_address: "1.1.1.3"
