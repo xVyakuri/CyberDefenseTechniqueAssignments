@@ -8,6 +8,7 @@ domain_mode: "WinThreshold"
 
 forward_zone: "lab.local"
 reverse_zone: "65.100.in-addr.arpa"
+
 dc_hostname: "SCP-DC01"
 dc_ip_address: "1.1.1.1"
 

@@ -92,3 +92,21 @@
     replication: domain
     state: present
 
+- name: Create A records for DC
+  community.windows.win_dns_record:
+    zone: "{{ forward_zone }}"
+    name: "{{ item.name }}"
+    type: A
+    value: "{{ item.ip_address }}"
+    state: present
+  loop: "{{ servers }}"
+
+# This PTR record assumes a /24 subnet. Adjust the name field as necessary for different subnet sizes.
+- name: Create PTR record for DC
+  community.windows.win_dns_record:
+    zone: "{{ reverse_zone }}"
+    name: "{{ item.ip_address.split('.')[-1] }}"
+    type: PTR
+    value: "{{ item.name }}.{{ forward_zone }}"
+    state: present
+  loop: "{{ servers }}"
