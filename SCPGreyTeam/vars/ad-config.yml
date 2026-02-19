@@ -1,5 +1,9 @@
 ---
+# ====================================================
 # Active Directory Configuration Variables
+# Used by: playbooks/setup-ad.yml -> roles/dc
+# ====================================================
+
 domain_name: "lab.local"
 domain_netbios_name: "LAB"
 safe_mode_password: "SafeMode123!"

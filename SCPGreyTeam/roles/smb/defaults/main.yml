@@ -1,0 +1,23 @@
+---
+# ========================================================
+# Default variables for SMB Server role
+# Override these in vars/smb-config.yml
+# ========================================================
+
+smb_server_hostname: "SCP-SMB01"
+smb_server_ip: "1.1.1.2"
+
+# Domain to join
+ad_domain_name: "lab.local"
+ad_netbios_name: "LAB"
+dc_ip_address: "1.1.1.1"
+
+# Credential used to join the domain (should be a domain admin)
+domain_join_user: "overseer.scp"
+domain_join_password: "student"
+
+# SMB shares to create
+smb_shares: []
+
+# Local groups to create on the SMB server
+smb_local_groups: []
