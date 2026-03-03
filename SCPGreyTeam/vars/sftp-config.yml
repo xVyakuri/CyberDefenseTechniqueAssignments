@@ -8,19 +8,19 @@ smtp_server_hostname: "SCP-SMTP01"
 smtp_server_ip: "1.1.1.3"
 
 # Active Directory connectivity
-ad_domain_name: "lab.local"
-ad_netbios_name: "LAB"
+ad_domain_name: "scp.com"
+ad_netbios_name: "SCP"
 dc_ip_address: "1.1.1.1"
 
 # Domain admin credentials for domain join
-domain_join_user: "overseer.scp"
-domain_join_password: "student"
+domain_join_user: "GreyTeam.admin"
+domain_join_password: "DONOTTOUCH!!!"
 
 # --------------------------------------------------------
 # SMTP Virtual Server Settings
 # --------------------------------------------------------
 smtp_port: 25
-smtp_relay_domain: "lab.local"
+smtp_relay_domain: "scp.com"
 
 # Maximum individual message size (KB)
 smtp_max_message_size_kb: 10240       # 10 MB

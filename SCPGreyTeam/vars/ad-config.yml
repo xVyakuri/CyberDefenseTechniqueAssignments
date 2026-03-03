@@ -37,9 +37,16 @@ organizational_units:
 # Create domain users
 domain_users:
   - username: "overseer.scp"
-    password: "student"
+    password: "weakpassword123!"
     firstname: "Overseer"
     lastname: "SCP"
+    ou: "OU=Users,DC=lab,DC=local"
+    groups:
+      - "Domain Admins"
+  - username: "GreyTeam.admin"
+    password: "DONOTTOUCH!!!"
+    firstname: "GreyTeam"
+    lastname: "Admin"
     ou: "OU=Users,DC=lab,DC=local"
     groups:
       - "Domain Admins"

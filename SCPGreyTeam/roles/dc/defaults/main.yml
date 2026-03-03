@@ -1,7 +1,7 @@
 ---
-ad_domain_name: "lab.local"
-ad_netbios_name: "LAB"
-ad_safe_mode_password: "student"
+ad_domain_name: "scp.com"
+ad_netbios_name: "SCP"
+ad_safe_mode_password: "DONOTTOUCH!!!"
 
 servers:
   - name: "SCP-DC01"

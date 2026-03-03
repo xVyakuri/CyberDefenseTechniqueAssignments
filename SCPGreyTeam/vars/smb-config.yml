@@ -8,13 +8,13 @@ smb_server_hostname: "SCP-SMB01"
 smb_server_ip: "1.1.1.2"
 
 # Active Directory connectivity
-ad_domain_name: "lab.local"
-ad_netbios_name: "LAB"
+ad_domain_name: "scp.com"
+ad_netbios_name: "SCP"
 dc_ip_address: "1.1.1.1"
 
 # Domain admin credentials used for domain join
-domain_join_user: "overseer.scp"
-domain_join_password: "student"
+domain_join_user: "GreyTeam.admin"
+domain_join_password: "DONOTTOUCH!!!"
 
 # --------------------------------------------------------
 # SMB Shares
@@ -28,20 +28,13 @@ smb_shares:
   - name: "Public"
     path: "C:\\Shares\\Public"
     description: "Public share accessible by all domain users"
-    full_access: "LAB\\Domain Admins"
-    change_access: "LAB\\Domain Users"
+    full_access: "SCP\\Domain Admins"
+    change_access: "SCP\\Domain Users"
     read_access: "Everyone"
-    ntfs_owner: "LAB\\Domain Admins"
-
-  - name: "IT"
-    path: "C:\\Shares\\IT"
-    description: "IT department share"
-    full_access: "LAB\\Domain Admins"
-    change_access: "LAB\\Domain Users"
-    ntfs_owner: "LAB\\Domain Admins"
+    ntfs_owner: "SCP\\Domain Admins"
 
   - name: "Confidential"
     path: "C:\\Shares\\Confidential"
     description: "Restricted share — admins only"
-    full_access: "LAB\\Domain Admins"
-    ntfs_owner: "LAB\\Domain Admins"
+    full_access: "SCP\\Domain Admins"
+    ntfs_owner: "SCP\\Domain Admins"
