@@ -42,11 +42,3 @@
   ansible.windows.win_shell: |
     Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
 
-- name: Add weak password policy
-  ansible.windows.win_shell: |
-    Import-Module ActiveDirectory
-    Set-ADDefaultDomainPasswordPolicy -Identity "{{ domain_name }}" `
-      -MinPasswordLength 5 `
-      -ComplexityEnabled $false `
-      -LockoutThreshold 5 `
-      -MaxPasswordAge 0

@@ -25,7 +25,7 @@
       when: hostname_change.reboot_required
 
   roles:
-    - domain-controller
+    - dc
     - ad-users
 
   post_tasks:

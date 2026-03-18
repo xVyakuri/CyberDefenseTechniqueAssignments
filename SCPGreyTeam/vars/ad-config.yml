@@ -6,7 +6,7 @@
 
 domain_name: "scp.com"
 domain_netbios_name: "SCP"
-safe_mode_password: "DONOTTOUCH!!!"
+safe_mode_password: "DONOTTOUCH!!!@123$"
 forest_mode: "WinThreshold"
 domain_mode: "WinThreshold"
 
@@ -14,17 +14,13 @@ forward_zone: "scp.com"
 reverse_zone: "65.100.in-addr.arpa"
 
 dc_hostname: "SCP-DC01"
-dc_ip_address: "1.1.1.1"
+dc_ip_address: "100.65.4.48"
 
 # Network Configuration
 dns_forwarder: "8.8.8.8"
 
 # Organizational Units
 organizational_units:
-  - name: "Users"
-    path: "OU=Users,DC=scp,DC=com"
-  - name: "Computers"
-    path: "OU=Computers,DC=scp,DC=com"
   - name: "Servers"
     path: "OU=Servers,DC=scp,DC=com"
   - name: "Service Accounts"
@@ -36,25 +32,25 @@ domain_users:
     password: "weakpassword123!"
     firstname: "Overseer"
     lastname: "SCP"
-    ou: "OU=Users,DC=scp,DC=com"
+    ou: "CN=Users,DC=scp,DC=com"
     groups:
       - "Domain Admins"
   - username: "GREYTEAM"
     password: "DONOTTOUCH!!!"
     firstname: "GREY"
     lastname: "TEAM"
-    ou: "OU=Users,DC=scp,DC=com"
+    ou: "CN=Users,DC=scp,DC=com"
     groups:
       - "Domain Admins"
   - username: "AD-Admin"
     password: "533431"
     firstname: "AD"
     lastname: "Admin"
-    ou: "OU=Users,DC=scp,DC=com"
+    ou: "CN=Users,DC=scp,DC=com"
     groups:
       - "Domain Admins" 
   - username: "umadan"
     password: "Test321!"
     firstname: "Uma"
     lastname: "Dan"
-    ou: "OU=Users,DC=scp,DC=com"
+    ou: "CN=Users,DC=scp,DC=com"

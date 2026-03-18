@@ -45,10 +45,8 @@
       -SafeModeAdministratorPassword $SecurePassword `
       -Force `
       -NoRebootOnCompletion:$false
-  when: domain_check.stdout | trim == "not_exists"
   register: dc_promotion
-  async: 1800
-  poll: 0
+  when: domain_check.stdout | trim == "not_exists"
 
 - name: Wait for DC promotion to complete (this may take 10-15 minutes)
   ansible.builtin.async_status:

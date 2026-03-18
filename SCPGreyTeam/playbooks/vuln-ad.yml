@@ -24,7 +24,7 @@
         seconds: 10
 
   roles:
-    - vulnerable-configs
+    - dc-vuln
 
   post_tasks:
     - name: Display vulnerabilities created

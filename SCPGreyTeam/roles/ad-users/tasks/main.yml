@@ -8,6 +8,15 @@
 # - Standard users with group memberships
 # ===================================
 
+- name: Add weak password policy
+  ansible.windows.win_shell: |
+    Import-Module ActiveDirectory
+    Set-ADDefaultDomainPasswordPolicy -Identity "{{ domain_name }}" `
+      -MinPasswordLength 5 `
+      -ComplexityEnabled $false `
+      -LockoutThreshold 5 `
+      -MaxPasswordAge 0
+
 - name: Create Organizational Units
   ansible.windows.win_shell: |
     Import-Module ActiveDirectory
