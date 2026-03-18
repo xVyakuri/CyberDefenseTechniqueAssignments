@@ -13,7 +13,7 @@ ad_netbios_name: "SCP"
 dc_ip_address: "1.1.1.1"
 
 # Domain admin credentials for domain join
-domain_join_user: "GreyTeam.admin"
+domain_join_user: "GREYTEAM"
 domain_join_password: "DONOTTOUCH!!!"
 
 # --------------------------------------------------------
@@ -45,8 +45,7 @@ smtp_badmail_dir: "C:\\inetpub\\mailroot\\Badmail"
 # virtual domains used in the competition topology here.
 # --------------------------------------------------------
 smtp_local_domains:
-  - "lab.local"
-  - "scp.lab.local"
+  - "scp.com"
 
 # --------------------------------------------------------
 # IP ranges allowed to relay outbound mail through this server.

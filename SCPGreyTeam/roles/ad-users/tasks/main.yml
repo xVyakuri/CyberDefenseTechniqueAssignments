@@ -17,22 +17,6 @@
       New-ADOrganizationalUnit -Name "{{ item.name }}" -Path "{{ item.path.split(',', 1)[1] }}" -ProtectedFromAccidentalDeletion $false
     }
   loop: "{{ organizational_units }}"
-  failed_when: false
-
-- name: Create Domain Admins Group
-  community.windows.win_domain_group:
-    name: "Domain Admins"
-    scope: "Global"
-    description: "Domain Administrators for Lab"
-    state: present
-  failed_when: false
-
-- name: Create domain admins
-  community.windows.win_domain_group_membership:
-    name: "Domain Admins"
-    members: "{{ domain_admins }}"
-    state: present
-  failed_when: false
 
 - name: Create domain users
   community.windows.win_domain_user:
@@ -46,7 +30,6 @@
     user_cannot_change_password: false
     enabled: true
   loop: "{{ domain_users }}"
-  failed_when: false
 
 - name: Add users to groups
   community.windows.win_domain_group_membership:
@@ -56,4 +39,3 @@
     state: present
   loop: "{{ domain_users | subelements('groups', skip_missing=True) }}"
   when: item.0.groups is defined
-  failed_when: false

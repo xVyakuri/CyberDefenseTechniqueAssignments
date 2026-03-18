@@ -13,7 +13,7 @@
     # Create GPO if missing
     if (-not (Get-GPO -Name "{{ item.name }}" -ErrorAction SilentlyContinue)) {
       New-GPO -Name "{{ item.name }}"
-      New-GPLink -Name "{{ item.name }}" -Target "DC=lab,DC=local" -Enforced Yes
+      New-GPLink -Name "{{ item.name }}" -Target "DC=scp,DC=com" -Enforced Yes
     }
 
     # Set registry value
@@ -41,7 +41,6 @@
 - name: Disable Windows Defender
   ansible.windows.win_shell: |
     Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
-  failed_when: false
 
 - name: Add weak password policy
   ansible.windows.win_shell: |
@@ -49,6 +48,5 @@
     Set-ADDefaultDomainPasswordPolicy -Identity "{{ domain_name }}" `
       -MinPasswordLength 5 `
       -ComplexityEnabled $false `
-      -LockoutThreshold 0 `
+      -LockoutThreshold 5 `
       -MaxPasswordAge 0
-  failed_when: false

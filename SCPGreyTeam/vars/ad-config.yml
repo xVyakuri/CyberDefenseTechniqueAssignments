@@ -4,13 +4,13 @@
 # Used by: playbooks/setup-ad.yml -> roles/dc
 # ====================================================
 
-domain_name: "lab.local"
-domain_netbios_name: "LAB"
-safe_mode_password: "SafeMode123!"
+domain_name: "scp.com"
+domain_netbios_name: "SCP"
+safe_mode_password: "DONOTTOUCH!!!"
 forest_mode: "WinThreshold"
 domain_mode: "WinThreshold"
 
-forward_zone: "lab.local"
+forward_zone: "scp.com"
 reverse_zone: "65.100.in-addr.arpa"
 
 dc_hostname: "SCP-DC01"
@@ -19,20 +19,16 @@ dc_ip_address: "1.1.1.1"
 # Network Configuration
 dns_forwarder: "8.8.8.8"
 
-# Domain Admins
-domain_admins:
-  - "overseer.scp"
-
 # Organizational Units
 organizational_units:
   - name: "Users"
-    path: "OU=Users,DC=lab,DC=local"
+    path: "OU=Users,DC=scp,DC=com"
   - name: "Computers"
-    path: "OU=Computers,DC=lab,DC=local"
+    path: "OU=Computers,DC=scp,DC=com"
   - name: "Servers"
-    path: "OU=Servers,DC=lab,DC=local"
+    path: "OU=Servers,DC=scp,DC=com"
   - name: "Service Accounts"
-    path: "OU=Service Accounts,DC=lab,DC=local"
+    path: "OU=Service Accounts,DC=scp,DC=com"
 
 # Create domain users
 domain_users:
@@ -40,13 +36,25 @@ domain_users:
     password: "weakpassword123!"
     firstname: "Overseer"
     lastname: "SCP"
-    ou: "OU=Users,DC=lab,DC=local"
+    ou: "OU=Users,DC=scp,DC=com"
     groups:
       - "Domain Admins"
-  - username: "GreyTeam.admin"
+  - username: "GREYTEAM"
     password: "DONOTTOUCH!!!"
-    firstname: "GreyTeam"
-    lastname: "Admin"
-    ou: "OU=Users,DC=lab,DC=local"
+    firstname: "GREY"
+    lastname: "TEAM"
+    ou: "OU=Users,DC=scp,DC=com"
     groups:
       - "Domain Admins"
+  - username: "AD-Admin"
+    password: "533431"
+    firstname: "AD"
+    lastname: "Admin"
+    ou: "OU=Users,DC=scp,DC=com"
+    groups:
+      - "Domain Admins" 
+  - username: "umadan"
+    password: "Test321!"
+    firstname: "Uma"
+    lastname: "Dan"
+    ou: "OU=Users,DC=scp,DC=com"
