@@ -1,0 +1,45 @@
+Day 0: Prep Day Notes
+
+Network Topology (10.10.10.0 subnet)
+SVC-AD-01, 10.10.10.21, Running AD/DNS
+- Running LDAP
+- Every User and server is domain-joined for all Windows and Linux servers
+- For Inject, will be making a new AD user for specific permissions that will be checked via scoring engine
+
+SVC-SMB-01, 10.10.10.22, Running SMB
+- Requires valid domain credentials to access
+
+SVC-FTP-01, 10.10.10.101, Running FTP
+
+SVC-REDIS-01, 10.10.10.102, Running Web App for Redis/Flask/Nginx
+- Web App using Flask and Nginx Stack
+
+SVC-DATABASE-01, 10.10.10.103, Running Redis/Nginx Database
+- Access control is misconfigured making exfiltration possible
+
+SVC-AMAZIN-01, 10.10.10.
+- PHP frontend through Apache that runs MySQL database
+
+SVC-SAMBA-01
+- Check version of Samba
+
+Business Injects
+- Manually graded by Grey Team based on completeness, accuracy, and professional delivery
+  - Deliver it via Discord in a PDF
+- 2 Injects a day (30 Minute Timeframe for each Inject)
+
+Flag Format: FLAG{it5_t1me_t0_h4ve_FUN}
+- In Very Obvious Locations
+
+Service Uptime Checked only every 5 Minutes
+User Functionality Checked only every 10 Minutes
+
+Password for All: DayOFun2026!
+For Linux:
+- readuserl1
+- readuserl2
+
+For Windows:
+- readuserw1
+- readuserw2
+
