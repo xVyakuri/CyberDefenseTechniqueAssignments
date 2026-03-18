@@ -34,7 +34,7 @@ Flag Format: FLAG{it5_t1me_t0_h4ve_FUN}
 Service Uptime Checked only every 30 seconds
 User Functionality Checked only every 5 Minutes
 
-Password for All: DayOFun2026!
+Password for All: Day0Fun2026!
 For Linux:
 - readuserl1
 - readuserl2
