@@ -31,8 +31,8 @@ Business Injects
 Flag Format: FLAG{it5_t1me_t0_h4ve_FUN}
 - In Very Obvious Locations
 
-Service Uptime Checked only every 5 Minutes
-User Functionality Checked only every 10 Minutes
+Service Uptime Checked only every 30 seconds
+User Functionality Checked only every 5 Minutes
 
 Password for All: DayOFun2026!
 For Linux:
