@@ -5,15 +5,15 @@
 # ========================================================
 
 smb_server_hostname: "SCP-SMB01"
-smb_server_ip: "1.1.1.2"
+smb_server_ip: "100.65.7.135"
 
 # Active Directory connectivity
 ad_domain_name: "scp.com"
 ad_netbios_name: "SCP"
-dc_ip_address: "1.1.1.1"
+dc_ip_address: "100.65.4.48"
 
 # Domain admin credentials used for domain join
-domain_join_user: "GreyTeam.admin"
+domain_join_user: "GREYTEAM"
 domain_join_password: "DONOTTOUCH!!!"
 
 # --------------------------------------------------------
