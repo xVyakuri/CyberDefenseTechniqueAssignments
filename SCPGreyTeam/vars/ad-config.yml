@@ -11,10 +11,10 @@ forest_mode: "WinThreshold"
 domain_mode: "WinThreshold"
 
 forward_zone: "scp.com"
-reverse_zone: "65.100.in-addr.arpa"
+reverse_zone: "10.10.10.in-addr.arpa"
 
 dc_hostname: "SCP-DC01"
-dc_ip_address: "100.65.4.48"
+dc_ip_address: "10.10.10.21"
 
 # Network Configuration
 dns_forwarder: "8.8.8.8"

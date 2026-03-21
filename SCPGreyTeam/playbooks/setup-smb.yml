@@ -16,7 +16,7 @@
     - ../vars/ad-config.yml
     - ../vars/smb-config.yml
 
-  tasks:
+  pre_tasks:
     - name: Set timezone to UTC
       community.windows.win_timezone:
         timezone: "UTC"
