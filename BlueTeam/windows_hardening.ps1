@@ -6,6 +6,7 @@
     Hardens Windows 10/11 workstations against common Red Team attack vectors.
     Run as Administrator on the Windows 11 SMB box or any domain workstation.
 #>
+#Note that RunAsPPL, Credential Guard, VBS, Disabled Powershellv2, Disabled NETBIOS, and noLMHash require a reboot to be in effect.
 
 $LogFile = "C:\BlueTeam\hardening_log.txt"
 New-Item -Path "C:\BlueTeam" -ItemType Directory -Force | Out-Null
